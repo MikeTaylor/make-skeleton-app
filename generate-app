@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if [ "x$1" = x-a ]; then
+    apps=`ls macros | sed 's/\.m4$//'`
+elif [ $# -gt 0 ]; then
+    apps=$*
+else
+    echo "Usage: generate-app [-a] | <appName> ..." >&2
+fi
+
+for app in $apps; do
+    echo "Generating app: $app"
+    rm -rf output/ui-$app
+    mkdir -p output/ui-$app
+    (
+	cd template
+	find . -type d -print | while read dir; do
+	    mkdir ../output/ui-$app/$dir
+	done
+	find . -type f -print | while read file; do
+	    if echo $file | egrep '\.(svg|png)' > /dev/null; then
+		echo "  Copying $file"
+		cp $file ../output/ui-$app/$file
+	    else
+		echo "  Converting $file"
+		cat ../macros/$app.m4 $file | m4 > ../output/ui-$app/$file
+	    fi
+	done
+    )
+done
