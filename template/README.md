@@ -1,4 +1,5 @@
-# ui-__NAME__
+ui-__NAME__
+===
 
 Copyright (C) 2018 The Open Library Foundation
 
