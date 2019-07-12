@@ -14,16 +14,17 @@ for app in $apps; do
     mkdir -p output/ui-$app
     (
 	cd template
+	dest=../output/ui-$app
 	find . -type d -print | while read dir; do
-	    test x$dir = x. || mkdir ../output/ui-$app/$dir
+	    test x$dir = x. || mkdir $dest/$dir
 	done
 	find . -type f -print | while read file; do
 	    if echo $file | egrep '\.(svg|png)' > /dev/null; then
 		echo "  Copying $file"
-		cp $file ../output/ui-$app/$file
+		cp $file $dest/$file
 	    else
 		echo "  Converting $file"
-		cat ../definitions/$app.m4 $file | m4 > ../output/ui-$app/$file
+		cat ../definitions/$app.m4 $file | m4 > $dest/$file
 	    fi
 	done
     )
