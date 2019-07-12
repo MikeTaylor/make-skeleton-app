@@ -9,12 +9,6 @@ else
 fi
 
 for app in $apps; do
-    echo $app
-done;
-
-exit
-
-
     echo "Generating app: $app"
     rm -rf output/ui-$app
     mkdir -p output/ui-$app
