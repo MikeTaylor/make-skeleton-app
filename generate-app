@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "x$1" = x-a ]; then
-    apps=`ls macros | sed 's/\.m4$//'`
+    apps=`ls definitions | sed -n 's/\.m4$//p'`
 elif [ $# -gt 0 ]; then
     apps=$*
 else
@@ -9,6 +9,12 @@ else
 fi
 
 for app in $apps; do
+    echo $app
+done;
+
+exit
+
+
     echo "Generating app: $app"
     rm -rf output/ui-$app
     mkdir -p output/ui-$app
@@ -23,7 +29,7 @@ for app in $apps; do
 		cp $file ../output/ui-$app/$file
 	    else
 		echo "  Converting $file"
-		cat ../macros/$app.m4 $file | m4 > ../output/ui-$app/$file
+		cat ../definitions/$app.m4 $file | m4 > ../output/ui-$app/$file
 	    fi
 	done
     )
