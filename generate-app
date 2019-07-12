@@ -22,6 +22,7 @@ for app in $apps; do
 	    echo "  Converting $file"
 	    cat ../definitions/$app.m4 $file | m4 > $dest/$file
 	done
+	mv $dest/translations/ui-APP $dest/translations/ui-$app
 	mkdir $dest/icons
 	cp ../definitions/$app.svg $dest/icons/app.svg
 	convert -size 14x14 $dest/icons/app.svg $dest/icons/app.png
